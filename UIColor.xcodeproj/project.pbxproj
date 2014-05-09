@@ -21,6 +21,7 @@
 		C9298D8D191D4BD6001D1722 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9298D6F191D4BD6001D1722 /* UIKit.framework */; };
 		C9298D95191D4BD6001D1722 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9298D93191D4BD6001D1722 /* InfoPlist.strings */; };
 		C9298D97191D4BD6001D1722 /* UIColorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9298D96191D4BD6001D1722 /* UIColorTests.m */; };
+		C9298DA2191D4BF2001D1722 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C9298DA1191D4BF2001D1722 /* UIColor+Extension.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		C9298D92191D4BD6001D1722 /* UIColorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UIColorTests-Info.plist"; sourceTree = "<group>"; };
 		C9298D94191D4BD6001D1722 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C9298D96191D4BD6001D1722 /* UIColorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIColorTests.m; sourceTree = "<group>"; };
+		C9298DA0191D4BF2001D1722 /* UIColor+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
+		C9298DA1191D4BF2001D1722 /* UIColor+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extension.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,8 @@
 				C9298D7A191D4BD6001D1722 /* MVAppDelegate.h */,
 				C9298D7B191D4BD6001D1722 /* MVAppDelegate.m */,
 				C9298D7D191D4BD6001D1722 /* Main.storyboard */,
+				C9298DA0191D4BF2001D1722 /* UIColor+Extension.h */,
+				C9298DA1191D4BF2001D1722 /* UIColor+Extension.m */,
 				C9298D80191D4BD6001D1722 /* MVViewController.h */,
 				C9298D81191D4BD6001D1722 /* MVViewController.m */,
 				C9298D83191D4BD6001D1722 /* Images.xcassets */,
@@ -253,6 +258,7 @@
 				C9298D78191D4BD6001D1722 /* main.m in Sources */,
 				C9298D82191D4BD6001D1722 /* MVViewController.m in Sources */,
 				C9298D7C191D4BD6001D1722 /* MVAppDelegate.m in Sources */,
+				C9298DA2191D4BF2001D1722 /* UIColor+Extension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
