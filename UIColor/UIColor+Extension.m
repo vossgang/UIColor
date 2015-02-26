@@ -443,8 +443,9 @@
     CGFloat alpha2  = components[3];
     
     return [UIColor colorWithRed:((red1 + red2) / 2) green:((green1 + green2) / 2) blue:((blue1 + blue2) / 2) alpha:((alpha1 + alpha2) / 2)];
-    
 }
+
++(UIColor *)feltGreen {return [UIColor colorWithRed:.00 green:.22 blue:.14 alpha:1];}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
