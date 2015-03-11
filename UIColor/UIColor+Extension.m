@@ -445,8 +445,14 @@
     return [UIColor colorWithRed:((red1 + red2) / 2) green:((green1 + green2) / 2) blue:((blue1 + blue2) / 2) alpha:((alpha1 + alpha2) / 2)];
 }
 
-+(UIColor *)feltGreen {return [UIColor colorWithRed:.00 green:.22 blue:.14 alpha:1];}
++(UIColor *)feltGreen   {return [UIColor colorWithRed:.00 green:.22 blue:.14 alpha:1];}
++(UIColor *)systemGray  {return [UIColor colorWithRed:.9 green:.9 blue:.9 alpha:1];}
 
++(UIColor *)variableGray
+{
+    CGFloat RGBElement = (arc4random_uniform(30) * .01) + .1;
+    return [UIColor colorWithRed:RGBElement green:RGBElement blue:RGBElement alpha:1];
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
