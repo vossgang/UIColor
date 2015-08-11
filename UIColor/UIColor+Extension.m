@@ -49,66 +49,12 @@
 
 +(NSArray *)randomColorPaletteOfFourColors
 {
-    NSMutableArray *colors = [NSMutableArray new];
-
-    UIColor *currentColor = [UIColor randomColor];
-    [colors addObject:currentColor];
-
-    const CGFloat *components = CGColorGetComponents([currentColor CGColor]);
-    CGFloat red    = components[0];
-    CGFloat green  = components[1];
-    CGFloat blue   = components[2];
-    
-    currentColor = [UIColor colorWithRed:green green:red blue:blue alpha:1];
-    
-    [colors addObject:currentColor];
-    
-    currentColor = [UIColor colorWithRed:blue green:green blue:red alpha:1];
-    
-    [colors addObject:currentColor];
-    
-    currentColor = [UIColor colorWithRed:red green:blue blue:green alpha:1];
-    [colors addObject:currentColor];
-    
-    return colors;
+    return [UIColor getColorPaletteFromColor:[UIColor randomColor] ofMaxSixteenColors:4];
 }
 
 +(NSArray *)randomColorPaletteOfMaxSixteenColors:(NSInteger)numberOfColors
 {
-    NSMutableArray *colors      = [NSMutableArray new];
-    
-    UIColor *currentColor       = [UIColor randomColor];
-    
-    const CGFloat *components   = CGColorGetComponents([currentColor CGColor]);
-    CGFloat red                 = components[0];
-    CGFloat green               = components[1];
-    CGFloat blue                = components[2];
-    
-    for (int i = 0; i < numberOfColors; i++) {
-        switch (i) {
-            case 0:                                                                                                     break;
-            case 1:     currentColor = [UIColor colorWithRed:green green:red blue:blue alpha:1];                        break;
-            case 2:     currentColor = [UIColor colorWithRed:blue green:green blue:red alpha:1];                        break;
-            case 3:     currentColor = [UIColor colorWithRed:red green:blue blue:green alpha:1];                        break;
-            case 4:     currentColor = [UIColor colorWithRed:((red + green) / 2) green:green blue:blue alpha:1];        break;
-            case 5:     currentColor = [UIColor colorWithRed:((red + blue) / 2) green:green blue:blue alpha:1];         break;
-            case 6:     currentColor = [UIColor colorWithRed:((green + blue) / 2) green:green blue:blue alpha:1];       break;
-            case 7:     currentColor = [UIColor colorWithRed:red green:((red + green) / 2) blue:blue alpha:1];          break;
-            case 8:     currentColor = [UIColor colorWithRed:red green:((red + blue) / 2) blue:blue alpha:1];           break;
-            case 9:     currentColor = [UIColor colorWithRed:red green:((green + blue) / 2) blue:blue alpha:1];         break;
-            case 10:    currentColor = [UIColor colorWithRed:red green:green blue:((red + green) / 2) alpha:1];         break;
-            case 11:    currentColor = [UIColor colorWithRed:red green:green blue:((red + blue) / 2) alpha:1];          break;
-            case 12:    currentColor = [UIColor colorWithRed:red green:green blue:((green + blue) / 2) alpha:1];        break;
-            case 13:    currentColor = [UIColor colorWithRed:((red + green + blue) / 3) green:green blue:blue alpha:1]; break;
-            case 14:    currentColor = [UIColor colorWithRed:red green:((red + green + blue) / 3) blue:blue alpha:1];   break;
-            case 15:    currentColor = [UIColor colorWithRed:red green:green blue:((red + green + blue) / 3) alpha:1];  break;
-            default:
-                break;
-        }
-        [colors addObject:currentColor];
-    }
-
-    return colors;
+    return [UIColor getColorPaletteFromColor:[UIColor randomColor] ofMaxSixteenColors:numberOfColors];
 }
 
 +(NSArray *)getTwelveColors
@@ -127,8 +73,7 @@
     CGFloat low     = [mainColor getLowestRGBValueFromColor];
     CGFloat mid     = [mainColor getMiddleRGBValueFromColor];
     
-    NSArray *colors =  @[mainColor,
-                         [UIColor  colorWithRed:green green:red blue:blue alpha:1],
+    NSArray *colors =  @[[UIColor  colorWithRed:green green:red blue:blue alpha:1],
                          [UIColor  colorWithRed:blue green:green blue:red alpha:1],
                          [UIColor  colorWithRed:red green:blue blue:green alpha:1],
                          
@@ -154,7 +99,6 @@
     
     return [UIColor  colorWithRed:high green:high blue:(low * .25) alpha:1];
 }
-
 -(UIColor *)getBrownPaletteColor
 {
     CGFloat high    = [self getHigestRGBValueFromColor];
@@ -317,7 +261,7 @@
     return colors;
 }
 
-+(BOOL)isRedVlueofColor:(UIColor *)color1 similerToRedValueOfColor:(UIColor *)color2
++(BOOL)isRedValueofColor:(UIColor *)color1 similerToRedValueOfColor:(UIColor *)color2
 {
     CGFloat variance = .05;
     return [UIColor isRedValueOfColor:color1 withinVariance:variance toRedValueOfColor:color2];
@@ -336,7 +280,7 @@
             (red1 - red2) < variance);
 }
 
-+(BOOL)isGreenVlueofColor:(UIColor *)color1 similerToGreenValueOfColor:(UIColor *)color2
++(BOOL)isGreenValueofColor:(UIColor *)color1 similerToGreenValueOfColor:(UIColor *)color2
 {
     CGFloat variance = .05;
     return [UIColor isGreenValueOfColor:color1 withinVariance:variance toGreenValueOfColor:color2];
@@ -353,7 +297,7 @@
     return (fabs(green1 - green2) < variance);
 }
 
-+(BOOL)isBlueVlueofColor:(UIColor *)color1 similerToBlueValueOfColor:(UIColor *)color2
++(BOOL)isBlueValueofColor:(UIColor *)color1 similerToBlueValueOfColor:(UIColor *)color2
 {
     CGFloat variance = .05;
     return [UIColor isBlueValueOfColor:color1 withinVariance:variance toBlueValueOfColor:color2];

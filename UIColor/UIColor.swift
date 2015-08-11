@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 extension UIColor {
+
+    //MARK: These are mine
     
     class func randomColor() -> UIColor {
         let r = CGFloat((arc4random_uniform(1000) + 1) / 1000)
@@ -17,6 +19,310 @@ extension UIColor {
         let b = CGFloat((arc4random_uniform(1000) + 1) / 1000)
         return UIColor(red: r, green: g, blue: b, alpha: 1.0)
     }
+    
+    func changeBrightnessByAmount(amount : CGFloat) -> UIColor {
+        var (hue, saturation, brightness, alpha) = (CGFloat(0.0), CGFloat(0.0), CGFloat(0.0), CGFloat(0.0))
+        if (self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)){
+            brightness += (amount - 1.0)
+            return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
+        }
+        
+        var white : CGFloat = 0.0
+        if (self.getWhite(&white, alpha: &alpha)){
+            white += (amount - 1.0)
+            return UIColor(white: white, alpha: alpha)
+        }
+        return self
+    }
+    
+    func getColorBrightness() -> CGFloat {
+        var red, green, blue : CGFloat
+        do {
+            let colorArray = try self.getRGBAComponents()
+            red = colorArray!.red
+            green = colorArray!.green
+            blue = colorArray!.blue
+        } catch {
+            return 0.0
+        }
+        
+        return ((red + green + blue) / 3.0)
+    }
+    
+    class func randomColorPalletteOfFourColors() -> NSArray  {
+        return UIColor.getColorPalletFromColor(UIColor.randomColor(), ofMaxSixteenColors: 4)
+    }
+    
+    class func getTwelveColors() -> NSArray {
+        return UIColor.getArrayOfTwelveColorsFromSeedColor(UIColor.randomColor())
+    }
+    
+    class func randomColorPaletteOfMaxSixteenColors(numberOfColors : NSInteger) -> NSArray {
+        return UIColor.getColorPalletFromColor(UIColor.randomColor(), ofMaxSixteenColors: numberOfColors)
+    }
+    
+    class func getArrayOfTwelveColorsFromSeedColor(color : UIColor) -> NSArray {
+        var red, green, blue : CGFloat
+        let high = color.getHighestRGBVlaueFromColor()
+        let mid = color.getMiddleRGBVlaueFromColor()
+        let low = color.getLowestRGBVlaueFromColor()
+
+        do {
+            let colorArray = try color.getRGBAComponents()
+            red = colorArray!.red
+            green = colorArray!.green
+            blue = colorArray!.blue
+        } catch {
+            red = CGFloat((arc4random_uniform(1000) + 1) / 1000)
+            green = CGFloat((arc4random_uniform(1000) + 1) / 1000)
+            blue = CGFloat((arc4random_uniform(1000) + 1) / 1000)
+        }
+        
+        let colors = NSArray(array: [
+            UIColor(red: green, green: red, blue: blue, alpha: 1.0),
+            UIColor(red: blue, green: green, blue: red, alpha: 1.0),
+            UIColor(red: red, green: blue, blue: green, alpha: 1.0),
+            
+            color.getYelllowPalletColor(),                                              //yellow
+            UIColor(red: high, green: (low * 0.25), blue: (low * 0.25), alpha: 1.0),    //red
+            UIColor(red: (low * 0.25), green: high, blue: (low * 0.25), alpha: 1.0),    //green
+            UIColor(red: (low * 0.25), green: (low * 0.25), blue: high, alpha: 1.0),    //blue
+            
+            UIColor(red: (low * 0.25), green: high, blue: high, alpha: 1.0),            //cyan
+            UIColor(red: high, green: (low * 0.25), blue: high, alpha: 1.0),            //Megenta
+            UIColor(red: mid, green: (low * 0.25), blue: mid, alpha: 1.0),              //Purple
+            color.getBrownPalletColor(),
+            color.getOrangePalletColor()
+            ])
+        
+        return colors
+    }
+    
+    func getYelllowPalletColor() -> UIColor {
+        let high = self.getHighestRGBVlaueFromColor()
+        let low = self.getLowestRGBVlaueFromColor()
+        return UIColor(red: high, green: high, blue: (low * 0.25), alpha: 1.0)
+    }
+    
+    func getBrownPalletColor() -> UIColor {
+        let high = self.getHighestRGBVlaueFromColor()
+        let mid = self.getMiddleRGBVlaueFromColor()
+        return UIColor(red: (((2 * high) + (2 * mid)) / 5.0), green: ((4 * mid) / 5), blue: (mid / 5), alpha: 1.0)
+    }
+    
+    func getOrangePalletColor() -> UIColor {
+        let high = self.getHighestRGBVlaueFromColor()
+        let mid = self.getMiddleRGBVlaueFromColor()
+        return UIColor(red: high, green: ((high + mid)  / 3), blue: 0.0, alpha: 1.0)
+    }
+    
+    func getMiddleRGBVlaueFromColor() -> CGFloat {
+        var red, green, blue : CGFloat
+        do {
+            let colorArray = try self.getRGBAComponents()
+            red = colorArray!.red
+            green = colorArray!.green
+            blue = colorArray!.blue
+            if (((red > green) && (red < blue)) || ((red > blue) && (red < green))) {
+                return red
+            } else if (((green > red) && (green < blue)) || ((green > blue) && (green < red))) {
+                return green
+            }
+            return blue
+        } catch {
+            return 1.0
+        }
+    }
+
+    
+    func getHighestRGBVlaueFromColor() -> CGFloat {
+        var red, green, blue : CGFloat
+        do {
+            let colorArray = try self.getRGBAComponents()
+            red = colorArray!.red
+            green = colorArray!.green
+            blue = colorArray!.blue
+            if ((red > green) && (red > blue)) {
+                return red
+            } else if (green > blue) {
+                return green
+            }
+            return blue
+        } catch {
+            return 1.0
+        }
+    }
+    
+    func getLowestRGBVlaueFromColor() -> CGFloat {
+        var red, green, blue : CGFloat
+        do {
+            let colorArray = try self.getRGBAComponents()
+            red = colorArray!.red
+            green = colorArray!.green
+            blue = colorArray!.blue
+            if ((red < green) && (red < blue)) {
+                return red
+            } else if (green < blue) {
+                return green
+            }
+            return blue
+        } catch {
+            return 1.0
+        }
+    }
+    
+    class func getColorPalletFromColor(mainColor : UIColor, ofMaxSixteenColors numberOfColors : NSInteger) -> NSArray {
+        let colorPalette = NSMutableArray()
+        var currentColor = mainColor
+        colorPalette.addObject(currentColor)
+        var red, green, blue : CGFloat
+        do {
+            let components = try mainColor.getRGBAComponents()
+            red = components!.red
+            green = components!.green
+            blue = components!.blue
+            
+            for(var i = 1; i < numberOfColors; i++ ) {
+                switch i {
+                case 1:     currentColor = UIColor(red: green, green: red, blue: blue, alpha: 1.0)
+                case 2:     currentColor = UIColor(red: blue, green: green, blue: red, alpha: 1.0)
+                case 3:     currentColor = UIColor(red: red, green: blue, blue: green, alpha: 1.0)
+                case 4:     currentColor = UIColor(red: ((red + green) / 2), green: green, blue: blue, alpha: 1.0)
+                case 5:     currentColor = UIColor(red: ((red + blue) / 2), green: green, blue: blue, alpha: 1.0)
+                case 6:     currentColor = UIColor(red: ((blue + green) / 2), green: green, blue: blue, alpha: 1.0)
+                case 7:     currentColor = UIColor(red: red, green: ((red + green) / 2), blue: blue, alpha: 1.0)
+                case 8:     currentColor = UIColor(red: red, green: ((red + blue) / 2), blue: blue, alpha: 1.0)
+                case 9:     currentColor = UIColor(red: red, green: ((blue + green) / 2), blue: blue, alpha: 1.0)
+                case 10:    currentColor = UIColor(red: red, green: green, blue: ((red + green) / 2), alpha: 1.0)
+                case 11:    currentColor = UIColor(red: red, green: green, blue: ((red + blue) / 2), alpha: 1.0)
+                case 12:    currentColor = UIColor(red: red, green: green, blue: ((blue + green) / 2), alpha: 1.0)
+                case 13:    currentColor = UIColor(red: ((red + green + blue) / 3), green: green, blue: blue, alpha: 1.0)
+                case 14:    currentColor = UIColor(red: red, green: ((red + green + blue) / 3), blue: blue, alpha: 1.0)
+                case 15:    currentColor = UIColor(red: red, green: green, blue: ((red + green + blue) / 3), alpha: 1.0)
+                default: break;
+
+                }
+                colorPalette.addObject(currentColor)
+            }
+            
+        } catch {
+            return colorPalette
+        }
+        return colorPalette
+    }
+    
+    class func randomColorPaletteOfSixteenColors() -> NSArray {
+        
+        let colorPalette = NSMutableArray()
+        let red = CGFloat((arc4random_uniform(1000) + 1) / 1000)
+        let green = CGFloat((arc4random_uniform(1000) + 1) / 1000)
+        let blue = CGFloat((arc4random_uniform(1000) + 1) / 1000)
+        
+        var currentColor = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: green, green: red, blue: blue, alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: blue, green: green, blue: red, alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: red, green: blue, blue: green, alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: ((red + green) / 2), green: green, blue: blue, alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: ((red + blue) / 2), green: green, blue: blue, alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: ((blue + green) / 2), green: green, blue: blue, alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: red, green: ((red + green) / 2), blue: blue, alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: red, green: ((red + blue) / 2), blue: blue, alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: red, green: ((blue + green) / 2), blue: blue, alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: red, green: green, blue: ((red + green) / 2), alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: red, green: green, blue: ((red + blue) / 2), alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: red, green: green, blue: ((blue + green) / 2), alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: ((red + green + blue) / 3), green: green, blue: blue, alpha: 1.0)
+        colorPalette.addObject(currentColor)
+
+        currentColor = UIColor(red: red, green: ((red + green + blue) / 3), blue: blue, alpha: 1.0)
+        colorPalette.addObject(currentColor)
+        
+        currentColor = UIColor(red: red, green: green, blue: ((red + green + blue) / 3), alpha: 1.0)
+        colorPalette.addObject(currentColor)
+
+        return colorPalette
+    }
+    
+    class func isRedValueOfColor(color1 : UIColor, similarToRedValueOfColor color2 : UIColor) -> Bool {
+        let variance : CGFloat = 0.05
+        return UIColor.isRedValueOfColor(color1, withInVariance: variance, toRedValueOfColor: color2)
+    }
+    
+    class func isRedValueOfColor(color1 : UIColor, withInVariance variance : CGFloat, toRedValueOfColor color2 : UIColor) -> Bool {
+        var red1, red2 : CGFloat
+        do {
+            let color1array = try color1.getRGBAComponents()
+            red1 = color1array!.red
+            let color2array = try color2.getRGBAComponents()
+            red2 = color2array!.red
+        } catch {
+            return false
+        }
+        return (fabs((red1 - red2)) < variance)
+    }
+    
+    class func isgreenValueOfColor(color1 : UIColor, similarTogreenValueOfColor color2 : UIColor) -> Bool {
+        let variance : CGFloat = 0.05
+        return UIColor.isgreenValueOfColor(color1, withInVariance: variance, togreenValueOfColor: color2)
+    }
+    
+    class func isgreenValueOfColor(color1 : UIColor, withInVariance variance : CGFloat, togreenValueOfColor color2 : UIColor) -> Bool {
+        var green1, green2 : CGFloat
+        do {
+            let color1array = try color1.getRGBAComponents()
+            green1 = color1array!.green
+            let color2array = try color2.getRGBAComponents()
+            green2 = color2array!.green
+        } catch {
+            return false
+        }
+        return (fabs((green1 - green2)) < variance)
+    }
+    
+    class func isBlueValueOfColor(color1 : UIColor, similarToBlueValueOfColor color2 : UIColor) -> Bool {
+        let variance : CGFloat = 0.05
+        return UIColor.isBlueValueOfColor(color1, withInVariance: variance, toBlueValueOfColor: color2)
+    }
+    
+    class func isBlueValueOfColor(color1 : UIColor, withInVariance variance : CGFloat, toBlueValueOfColor color2 : UIColor) -> Bool {
+        var blue1, blue2 : CGFloat
+        do {
+            let color1array = try color1.getRGBAComponents()
+            blue1 = color1array!.blue
+            let color2array = try color2.getRGBAComponents()
+            blue2 = color2array!.blue
+        } catch {
+            return false
+        }
+        return (fabs((blue1 - blue2)) < variance)
+    }
+    
     
     class func isColor(color1 : UIColor, similarTo color2: UIColor) throws -> Bool {
         let percentage : CGFloat = 0.05
@@ -159,7 +465,7 @@ extension UIColor {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    //The following was borrowed from https://gist.github.com/arshad/de147c42d7b3063ef7bc
+    //MARK: The following was borrowed from https://gist.github.com/arshad/de147c42d7b3063ef7bc
     class func colorWithHexString (hex : String) -> UIColor {
         var cString:String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).uppercaseString
         
@@ -187,7 +493,7 @@ extension UIColor {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //The following was borrowed from https://github.com/mokagio/UIColor-FlatColors
+    //MARK: The following was borrowed from https://github.com/mokagio/UIColor-FlatColors
     class func flatTurquoiseColor() -> UIColor     { return UIColor(red:0.10196, green:0.73725, blue:0.61176, alpha:1.0) }
     class func flatGreenSeaColor() -> UIColor      { return UIColor(red:0.08627, green:0.62745, blue:0.52156, alpha:1.0) }
     class func flatEmeraldColor() -> UIColor       { return UIColor(red:0.18039, green:0.80000, blue:0.44313, alpha:1.0) }
@@ -214,7 +520,7 @@ extension UIColor {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
-    //The following was borrowed from https://github.com/CaptainRedmuff/UIColor-Crayola
+    //MARK: The following was borrowed from https://github.com/CaptainRedmuff/UIColor-Crayola
     class func AbsoluteZeroColor() -> UIColor              { return UIColor(red:0.000, green:0.282, blue:0.729, alpha:1.0) }
     class func AlienArmpitColor() -> UIColor               { return UIColor(red:0.518, green:0.871, blue:0.008, alpha:1.0) }
     class func AlloyOrangeColor() -> UIColor               { return UIColor(red:0.769, green:0.384, blue:0.063, alpha:1.0) }
