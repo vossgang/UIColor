@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C92388461B78439F00378A39 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92388451B78439F00378A39 /* UIColor.swift */; };
 		C9298D6C191D4BD6001D1722 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9298D6B191D4BD6001D1722 /* Foundation.framework */; };
 		C9298D6E191D4BD6001D1722 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9298D6D191D4BD6001D1722 /* CoreGraphics.framework */; };
 		C9298D70191D4BD6001D1722 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9298D6F191D4BD6001D1722 /* UIKit.framework */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C92388441B78439F00378A39 /* UIColor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor-Bridging-Header.h"; sourceTree = "<group>"; };
+		C92388451B78439F00378A39 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		C9298D68191D4BD6001D1722 /* UIColor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIColor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9298D6B191D4BD6001D1722 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9298D6D191D4BD6001D1722 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -120,10 +123,12 @@
 				C9298D7D191D4BD6001D1722 /* Main.storyboard */,
 				C9298DA0191D4BF2001D1722 /* UIColor+Extension.h */,
 				C9298DA1191D4BF2001D1722 /* UIColor+Extension.m */,
+				C92388451B78439F00378A39 /* UIColor.swift */,
 				C9298D80191D4BD6001D1722 /* MVViewController.h */,
 				C9298D81191D4BD6001D1722 /* MVViewController.m */,
 				C9298D83191D4BD6001D1722 /* Images.xcassets */,
 				C9298D72191D4BD6001D1722 /* Supporting Files */,
+				C92388441B78439F00378A39 /* UIColor-Bridging-Header.h */,
 			);
 			path = UIColor;
 			sourceTree = "<group>";
@@ -202,7 +207,8 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MV;
-				LastUpgradeCheck = 0510;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Matthew Voss";
 				TargetAttributes = {
 					C9298D88191D4BD6001D1722 = {
@@ -259,6 +265,7 @@
 				C9298D82191D4BD6001D1722 /* MVViewController.m in Sources */,
 				C9298D7C191D4BD6001D1722 /* MVAppDelegate.m in Sources */,
 				C9298DA2191D4BF2001D1722 /* UIColor+Extension.m in Sources */,
+				C92388461B78439F00378A39 /* UIColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +333,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -383,10 +391,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UIColor/UIColor-Prefix.pch";
 				INFOPLIST_FILE = "UIColor/UIColor-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Matt.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "UIColor/UIColor-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -396,10 +409,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UIColor/UIColor-Prefix.pch";
 				INFOPLIST_FILE = "UIColor/UIColor-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Matt.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "UIColor/UIColor-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -420,6 +437,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "UIColorTests/UIColorTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "Matt.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -438,6 +456,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UIColor/UIColor-Prefix.pch";
 				INFOPLIST_FILE = "UIColorTests/UIColorTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "Matt.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -463,6 +482,7 @@
 				C9298D9C191D4BD6001D1722 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C9298D9D191D4BD6001D1722 /* Build configuration list for PBXNativeTarget "UIColorTests" */ = {
 			isa = XCConfigurationList;
@@ -471,6 +491,7 @@
 				C9298D9F191D4BD6001D1722 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
